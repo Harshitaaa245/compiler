@@ -1,0 +1,27 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ifstream fin("input.txt");
+    ofstream fout("tempp.txt");
+    string line;
+    int n, i = 1;
+
+    cout << "Enter line number: ";
+    cin >> n;
+
+    while (getline(fin, line)) {
+        if (i != n)
+            fout << line << endl;
+        i++;
+    }
+
+    fin.close();
+    fout.close();
+    remove("input.txt");
+    rename("tempp.txt", "input.txt");
+
+    return 0;
+}
+
