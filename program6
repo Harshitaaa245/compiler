@@ -1,0 +1,43 @@
+#include <iostream>
+#include <fstream>
+#include <set>
+#include <sstream>
+using namespace std;
+
+int main() {
+    ifstream stopFile("stop_words.txt");
+    ifstream storyFile("story.txt");
+    ofstream outFile("story_without_stopwords.txt");
+
+    set<string> stopWords;
+    string word;
+
+
+    while (stopFile >> word) {
+        stopWords.insert(word);
+    }
+
+    string line;
+
+
+    while (getline(storyFile, line)) {
+        stringstream ss(line);
+        string temp;
+
+        while (ss >> temp) {
+
+            if (stopWords.find(temp) == stopWords.end()) {
+                outFile << temp << " ";
+            }
+        }
+        outFile << endl; // new line
+    }
+
+    stopFile.close();
+    storyFile.close();
+    outFile.close();
+
+    cout << "Stop words removed successfully!" << endl;
+
+    return 0;
+}
