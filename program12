@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+FILE *out;
+%}
+
+%%
+[ \t]+        { fprintf(out, " "); }     // multiple spaces/tabs → single space
+\n+           { fprintf(out, "\n"); }    // multiple newlines → single newline
+.             { fprintf(out, "%s", yytext); }  // copy other characters
+%%
+
+int main() {
+    FILE *in = fopen("input12.txt", "r");
+    out = fopen("output12.txt", "w");
+
+    if (!in || !out) {
+        printf("File error\n");
+        return 1;
+    }
+
+    yyin = in;     // set input file
+    yylex();       // start scanning
+
+    fclose(in);
+    fclose(out);
+
+    printf("Output written to output12.txt\n");
+    return 0;
+}
+
+int yywrap() {
+    return 1;
+}
