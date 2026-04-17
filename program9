@@ -1,0 +1,19 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+[aeiouAEIOU]    { printf("It is a vowel\n"); }
+[a-zA-Z]        { printf("It is a consonant\n"); }
+.               { printf("Invalid input\n"); }
+%%
+
+int main() {
+    printf("Enter a letter: ");
+    yylex();
+    return 0;
+}
+
+int yywrap() {
+    return 1;
+}
